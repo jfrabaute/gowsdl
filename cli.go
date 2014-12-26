@@ -11,7 +11,7 @@ import (
 	"runtime"
 
 	flags "github.com/jessevdk/go-flags"
-	gen "github.com/mattheath/gowsdl/generator"
+	gen "github.com/jfrabaute/gowsdl/generator"
 )
 
 const version = "v0.0.1"
