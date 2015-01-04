@@ -44,8 +44,8 @@ var typesTmpl = `
 	{{.Annotation.Documentation}}
 	*/{{end}}
 	type {{$name | makePublic}} struct {
-		XMLName xml.Name ` + "`xml:\"{{targetNamespace}} {{$name}}\"`" + `
-		{{if ne .ComplexContent.Extension.Base ""}}
+		{{if eq noXmlName false}}XMLName xml.Name ` + "`xml:\"{{targetNamespace}} {{$name}}\"`" + `
+		{{end}}{{if ne .ComplexContent.Extension.Base ""}}
 			{{template "ComplexContent" .ComplexContent}}
 		{{else if ne .SimpleContent.Extension.Base ""}}
 			{{template "SimpleContent" .SimpleContent}}
@@ -62,8 +62,8 @@ var typesTmpl = `
 	{{$name := replaceReservedWords .Name}}
 	{{with .ComplexType}}
 		type {{$name | makePublic}} struct {
-			XMLName xml.Name ` + "`xml:\"{{targetNamespace}} {{$name}}\"`" + `
-			{{if ne .ComplexContent.Extension.Base ""}}
+			{{if eq noXmlName false}}XMLName xml.Name ` + "`xml:\"{{targetNamespace}} {{$name}}\"`" + `
+			{{end}}{{if ne .ComplexContent.Extension.Base ""}}
 				{{template "ComplexContent" .ComplexContent}}
 			{{else if ne .SimpleContent.Extension.Base ""}}
 				{{template "SimpleContent" .SimpleContent}}

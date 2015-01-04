@@ -27,6 +27,7 @@ const maxRecursion uint8 = 5
 type GoWsdl struct {
 	file, pkg             string
 	ignoreTls             bool
+	noXmlName             bool
 	wsdl                  *Wsdl
 	resolvedXsdExternals  map[string]bool
 	currentRecursionLevel uint8
@@ -71,7 +72,7 @@ func downloadFile(url string, ignoreTls bool) ([]byte, error) {
 	return data, nil
 }
 
-func NewGoWsdl(file, pkg string, ignoreTls bool) (*GoWsdl, error) {
+func NewGoWsdl(file, pkg string, ignoreTls bool, noXmlName bool) (*GoWsdl, error) {
 	file = strings.TrimSpace(file)
 	if file == "" {
 		Log.Crit("WSDL file is required to generate Go proxy")
@@ -87,6 +88,7 @@ func NewGoWsdl(file, pkg string, ignoreTls bool) (*GoWsdl, error) {
 		file:      file,
 		pkg:       pkg,
 		ignoreTls: ignoreTls,
+		noXmlName: noXmlName,
 	}, nil
 }
 
@@ -226,6 +228,7 @@ func (g *GoWsdl) genTypes() ([]byte, error) {
 		"makePublic":           makePublic,
 		"makeValidName":        makeValidName,
 		"targetNamespace":      func() string { return g.wsdl.TargetNamespace },
+		"noXmlName":            func() bool { return g.noXmlName },
 	}
 
 	//TODO resolve element refs in place.

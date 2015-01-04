@@ -21,6 +21,7 @@ var opts struct {
 	Package    string `short:"p" long:"package" description:"Package under which code will be generated" default:"myservice"`
 	OutputFile string `short:"o" long:"output" description:"File where the generated code will be saved" default:"myservice.go"`
 	IgnoreTls  bool   `short:"i" long:"ignore-tls" description:"Ignores invalid TLS certificates. It is not recomended for production. Use at your own risk" default:"false"`
+	NoXmlName  bool   `short:"x" long:"noxmlname" description:"Don't add XMLName xml.Name to the structures" default:"false"`
 }
 
 func init() {
@@ -52,7 +53,7 @@ func main() {
 		log.Fatalln("Output file cannot be the same WSDL file")
 	}
 
-	gowsdl, err := gen.NewGoWsdl(args[0], opts.Package, opts.IgnoreTls)
+	gowsdl, err := gen.NewGoWsdl(args[0], opts.Package, opts.IgnoreTls, opts.NoXmlName)
 	if err != nil {
 		log.Fatalln(err)
 	}
