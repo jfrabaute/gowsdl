@@ -43,7 +43,7 @@ var typesTmpl = `
 	{{ if ne .Annotation.Documentation ""}}/*
 	{{.Annotation.Documentation}}
 	*/{{end}}
-	type {{$name}} struct {
+	type {{$name | makePublic}} struct {
 		XMLName xml.Name ` + "`xml:\"{{targetNamespace}} {{$name}}\"`" + `
 		{{if ne .ComplexContent.Extension.Base ""}}
 			{{template "ComplexContent" .ComplexContent}}
@@ -61,7 +61,7 @@ var typesTmpl = `
 {{define "ComplexTypeLocal"}}
 	{{$name := replaceReservedWords .Name}}
 	{{with .ComplexType}}
-		type {{$name}} struct {
+		type {{$name | makePublic}} struct {
 			XMLName xml.Name ` + "`xml:\"{{targetNamespace}} {{$name}}\"`" + `
 			{{if ne .ComplexContent.Extension.Base ""}}
 				{{template "ComplexContent" .ComplexContent}}

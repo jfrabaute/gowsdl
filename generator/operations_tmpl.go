@@ -37,8 +37,8 @@ var opsTmpl = `
 		{{if ne .Doc ""}}/*
 		{{.Doc}}
 		*/{{end}}
-		func (service *{{$portType}}) {{makePublic .Name}} (request *{{$requestType}}) (*{{$output}}, error) {
-			response := &{{$output}}{}
+		func (service *{{$portType}}) {{makePublic .Name}} (request *{{$requestType |makePublic}}) (*{{$output | makePublic}}, error) {
+			response := &{{$output | makePublic}}{}
 			err := service.client.Call("{{$soapAction}}", request, response)
 			if err != nil {
 				return nil, err
